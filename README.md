@@ -2,6 +2,12 @@
 
 [toc]
 
+## 简介
+
+本GDB插件用于qemu环境下的linux内核调试，主要提供了一些方便调试的命令，如快速查看堆信息的slabinfo命令、查看进程信息的taskinfo命令、快速解析结构体的destruct命令等。详情见下面介绍。
+
+叠甲：由于linux内核涉及架构很多，我手头有的环境也就是qemu x86_64的，也没有很多测试样本，再加上本人编码能力巨菜，所以在一些其他的环境使用可能会有一些问题，或者qemu x86_64环境也可能有我目前没发现的问题。只能后续慢慢修改了。
+
 ## 调试命令总览
 
 总共提供命令如下：
@@ -12,6 +18,9 @@
 - [cpus/setcpus 打印/修改 当前环境的cpu数量信息](#cpus命令)
 - [nodes/setnodes 打印/修改 当前环境NUMA node节点信息](nodes命令)
 - [slabinfo 打印内核堆slab 信息](slabinfo命令)
+- slabtrace 追踪slab分配情况(TODO)
+- trunktrace 追踪一个堆块的分配与释放(TODO)
+- pagetrace 追踪一个slab page的分配与释放(TODO)
 
 ## 通用调试命令
 
@@ -213,6 +222,8 @@ taskinfo sleep
 ### slabinfo命令
 
 #### 功能
+
+对于一些slab相关的编译选项都会自动判断适配当前环境，如`CONFIG_SLUB_CPU_PARTIAL`、`CONFIG_SLAB_FREELIST_HARDENED`和`CONFIG_SLUB_DEBUG`。
 
 显示一个slab cache 的基本信息、包括：
 
