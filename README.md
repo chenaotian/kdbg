@@ -7,11 +7,11 @@
 总共提供命令如下：
 
 - [destruct 以指定结构体格式解析一个地址的数据](#destruct命令)
-- taskinfo 打印进程信息
-- percpu 快速获取percpu变量
-- cpus/setcpus 打印/修改 当前环境的cpu数量信息
-- nodes/setnodes 打印/修改 当前环境NUMA node节点信息
-- slabinfo 打印内核堆slab 信息
+- [taskinfo 打印进程信息](#taskino命令)
+- [percpu 快速获取percpu变量](#percpu命令)
+- [cpus/setcpus 打印/修改 当前环境的cpu数量信息](#cpus命令)
+- [nodes/setnodes 打印/修改 当前环境NUMA node节点信息](nodes命令)
+- [slabinfo 打印内核堆slab 信息](slabinfo命令)
 
 ## 通用调试命令
 
@@ -82,9 +82,7 @@ destruct 0xffff888003041a68 kmem_cache.list list
 
 ![image-20230704195137780](readme.assets/image-20230704195137780.png)
 
-### percpu 命令
-
-
+### percpu命令
 
 #### 功能
 
@@ -120,7 +118,7 @@ percpu 0 filp_cachep->cpu_sla  # current CPU id is 0
 
 ![image-20230705110540792](readme.assets/image-20230705110540792.png)
 
-### cpus 命令
+### cpus命令
 
 打印总共多少cpus
 
@@ -129,7 +127,7 @@ percpu 0 filp_cachep->cpu_sla  # current CPU id is 0
 [+] The number of CPUs is 4
 ```
 
-### setcpus 命令
+### setcpus命令
 
 如果自动获取的cpu数量有误，支持手动修改cpu数量
 
@@ -138,7 +136,7 @@ percpu 0 filp_cachep->cpu_sla  # current CPU id is 0
 [+] Set CPUs success, the number of CPUs is 4
 ```
 
-### nodes 命令
+### nodes命令
 
 打印总共多少个NUMA nodes节点
 
@@ -147,7 +145,7 @@ percpu 0 filp_cachep->cpu_sla  # current CPU id is 0
 [+] The number of NUMA nodes is 2
 ```
 
-### setnodes 命令
+### setnodes命令
 
 如果自动获取的节点数量有误，支持手动修改nodes数量
 
