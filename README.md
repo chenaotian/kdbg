@@ -225,6 +225,8 @@ taskinfo sleep
 
 对于一些slab相关的编译选项都会自动判断适配当前环境，如`CONFIG_SLUB_CPU_PARTIAL`、`CONFIG_SLAB_FREELIST_HARDENED`和`CONFIG_SLUB_DEBUG`。
 
+对于5.16 前后对slab page的结构体解析支持。5.16之前使用`struct page`解析，5.16 之后使用`struct slab`解析。
+
 显示一个slab cache 的基本信息、包括：
 
 - slab cache基本信息：
