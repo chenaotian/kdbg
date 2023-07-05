@@ -6,7 +6,7 @@
 
 总共提供命令如下：
 
-- [destruct 以指定结构体格式解析一个地址的数据](#destruct 命令)
+- [destruct 以指定结构体格式解析一个地址的数据](#destruct命令)
 - taskinfo 打印进程信息
 - percpu 快速获取percpu变量
 - cpus/setcpus 打印/修改 当前环境的cpu数量信息
@@ -15,7 +15,7 @@
 
 ## 通用调试命令
 
-### destruct 命令
+### destruct命令
 
 #### 功能
 
