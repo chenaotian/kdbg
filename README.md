@@ -73,7 +73,7 @@ destruct 0xffff888003041b00 kmem_cache
 
 这两种写法含义相同，都是以`struct kmem_cache`结构体格式打印0xffff888003041b00处信息：
 
-![image-20230704194305397](readme.assets/image-20230704194305397.png)
+![image-20230704194305397](README.assets/image-20230704194305397.png)
 
 如果我们只想知道其中list结构体的信息，可以使用下面两条命令：
 
@@ -84,7 +84,7 @@ destruct 0xffff888003041b00 kmem_cache list
 
 这样就会只打印list成员的信息。该成员是指向下一个slab cache的双链表结构。
 
-![image-20230704194729630](readme.assets/image-20230704194729630.png)
+![image-20230704194729630](README.assets/image-20230704194729630.png)
 
 该双链表指向的是下一个slab cache的lsit成员地址，如果我们想知道下一个slab cache成员的完整信息，可以拷贝next指针的值，然后使用kmem_cache.list解析下一个slab cache：
 
@@ -92,7 +92,7 @@ destruct 0xffff888003041b00 kmem_cache list
 destruct 0xffff888003041a68 kmem_cache.list
 ```
 
-![image-20230704195040597](readme.assets/image-20230704195040597.png)
+![image-20230704195040597](README.assets/image-20230704195040597.png)
 
 同样也可以只看下一个slab cache 的list成员：
 
@@ -100,7 +100,7 @@ destruct 0xffff888003041a68 kmem_cache.list
 destruct 0xffff888003041a68 kmem_cache.list list
 ```
 
-![image-20230704195137780](readme.assets/image-20230704195137780.png)
+![image-20230704195137780](README.assets/image-20230704195137780.png)
 
 ### percpu命令
 
@@ -126,7 +126,7 @@ percpu
 
 打印当前cpu(cpu0)的per_cpu基地址：
 
-![image-20230705110642103](readme.assets/image-20230705110642103.png)
+![image-20230705110642103](README.assets/image-20230705110642103.png)
 
 ```
 percpu 0x2ce60
@@ -136,7 +136,7 @@ percpu 0 filp_cachep->cpu_sla  # current CPU id is 0
 
 打印当前cpu(cpu0)的`filp_cachep->cpu_slab` 地址 
 
-![image-20230705110540792](readme.assets/image-20230705110540792.png)
+![image-20230705110540792](README.assets/image-20230705110540792.png)
 
 ### cpus命令
 
@@ -209,7 +209,7 @@ taskinfo
 
 直接使用是打印当前进程信息：
 
-![image-20230704195939807](readme.assets/image-20230704195939807.png)
+![image-20230704195939807](README.assets/image-20230704195939807.png)
 
 ```
 taskinfo 1
@@ -218,7 +218,7 @@ taskinfo init
 
 根据进程号或进程名打印特定进程：
 
-![image-20230704200047443](readme.assets/image-20230704200047443.png)
+![image-20230704200047443](README.assets/image-20230704200047443.png)
 
 ```
 taskinfo sleep
@@ -226,7 +226,7 @@ taskinfo sleep
 
 如果多个进程同名，则会打印出所有进程号，后续自己选择进程号打印：
 
-![image-20230704200124516](readme.assets/image-20230704200124516.png)
+![image-20230704200124516](README.assets/image-20230704200124516.png)
 
 ## 内核堆slub调试
 
@@ -299,7 +299,7 @@ slabinfo kmalloc-1k
 
 直接查看特定slab，如kmalloc-1k（slab 名）
 
-![image-20230704200703925](readme.assets/image-20230704200703925.png)
+![image-20230704200703925](README.assets/image-20230704200703925.png)
 
 当前环境共有四个cpu和2个NUMA node，可以看到默认只打印了当前的cpu0和第一个node node0，对于freelist比较长的页只显示前两个。
 
@@ -309,7 +309,7 @@ slabinfo kmalloc-1k cpu
 
 通常情况下可能我们队node 中的信息不太感兴趣，cache中的信息也是看一遍就知道了，基本每次只是看一下cpu slab中的信息更新情况，可以增加cpu参数只打印cpu信息：
 
-![image-20230704201001809](readme.assets/image-20230704201001809.png)
+![image-20230704201001809](README.assets/image-20230704201001809.png)
 
 ```
 slabinfo kmalloc-1k cpu allcpu alllist
@@ -317,7 +317,7 @@ slabinfo kmalloc-1k cpu allcpu alllist
 
 如果想要查看其他cpu的信息，并且想让freelist显示完整，可以相应的增加allcpu 和alllist 打印参数：
 
-![image-20230704201042861](readme.assets/image-20230704201042861.png)
+![image-20230704201042861](README.assets/image-20230704201042861.png)
 
 cpu node cache allcpu allnode alllist all7个参数是可以随意组合的，前三个参数限制打印的范围，后三个参数限制打印的详细程度，如：
 
@@ -336,7 +336,7 @@ slabinfo kmalloc-1k all node # 打印所有node 的信息，显示完整freelist
 
 通常情况下，直接获取per_cpu变量只会获取到一个非常小的值：
 
-![image-20230703190131139](readme.assets/image-20230703190131139.png)
+![image-20230703190131139](README.assets/image-20230703190131139.png)
 
 这肯定是无法访问的地址，其实这代表这这个per_cpu变量的**偏移**，实际的per_cpu遍历需要找到对应cpu的per_cpu变量基地址，每个cpu都有自己的和其他cpu不同的per_cpu变量基地址，加上相同偏移就是对应cpu的per_cpu变量实际的值。
 
@@ -344,15 +344,15 @@ slabinfo kmalloc-1k all node # 打印所有node 的信息，显示完整freelist
 
 - gs_base寄存器：gs_base寄存器存放当前cpu的per_cpu偏移(前提是当前环境有这个寄存器)：
 
-  ![image-20230703190653972](readme.assets/image-20230703190653972.png)
+  ![image-20230703190653972](README.assets/image-20230703190653972.png)
 
 - `__per_cpu_offset`全局数组，存放着各个cpu的per_cpu变量基地址，根据cpu下标寻址，如果你的环境只有4个cpu，则只有前四个是有效的，代表各个cpu的per_cpu遍历基地址：
 
-  ![image-20230703190849956](readme.assets/image-20230703190849956.png)
+  ![image-20230703190849956](README.assets/image-20230703190849956.png)
 
 获取到per_cpu遍历基地址之后，加上每个per_cpu变量的偏移就是对应的实际地址：
 
-![image-20230703191213211](readme.assets/image-20230703191213211.png)
+![image-20230703191213211](README.assets/image-20230703191213211.png)
 
 #### NUMA node
 
@@ -394,7 +394,7 @@ struct task_struct {
 
 类似结构用图表示如下：
 
-![image-20230703194114657](readme.assets/image-20230703194114657.png)
+![image-20230703194114657](README.assets/image-20230703194114657.png)
 
 ### 堆调试
 
@@ -418,7 +418,7 @@ struct task_struct {
 
   - 但存在[slab 重用机制](https://blog.csdn.net/Breeze_CAT/article/details/130015522?spm=1001.2014.3001.5502)导致会导致某两个slab cache使用同一个cache，然而每个cache只有一个名字，这就会导致你搜索和别的cache重用的cache搜索不到。但一般这些slab都有自己的全局变量名，如`filp_cachep`，我们会发现`filp_cachep->name`是"pool_workqueue"这就是slab 重用机制导致的。为了能快速搜索这类slab，需要支持对符号的搜索。
 
-    ![image-20230703195751288](readme.assets/image-20230703195751288.png)
+    ![image-20230703195751288](README.assets/image-20230703195751288.png)
 
 
 
