@@ -21,6 +21,7 @@
 - slabtrace 追踪slab分配情况(TODO)
 - trunktrace 追踪一个堆块的分配与释放(TODO)
 - pagetrace 追踪一个slab page的分配与释放(TODO)
+- 一个酷炫的LOGO(TODO)
 
 ## 通用调试命令
 
