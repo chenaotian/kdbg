@@ -125,7 +125,10 @@ def get_cpus():
     
 def get_current_cpu():
     # 暂时只支持使用qemu进行调试, 根据kernel提供的gdb脚本，qemu模式下这样可以获得cpuid
-    return gdb.selected_thread().num - 1
+    if gdb.selected_thread() == None:
+        return 0
+    else:
+        return gdb.selected_thread().num - 1
 
 #获取per_cpu变量当前cpu偏移地址
 def get_cpu_offset(cpu_id):
@@ -623,7 +626,7 @@ def get_task_by_pid(pid):
 # 打印cred 信息
 def show_cred(cred, print_level):
     print(title(layer * print_level + "Cred Info: ") + print_ptr_data(cred, cred.type))
-    print_level += 1
+    #print_level += 1
     uid, suid, euid, fsuid = int(cred['uid']['val']), int(cred['suid']['val']), int(cred['euid']['val']), int(cred['fsuid']['val'])
     print(layer * print_level + info("uid: {:<5} suid: {:<5} euid: {:<5} fsuid: {:<5}").format(uid, suid, euid, fsuid))
     gid, sgid, egid, fsgid = int(cred['gid']['val']), int(cred['sgid']['val']), int(cred['egid']['val']), int(cred['fsgid']['val'])
@@ -634,7 +637,7 @@ def show_cred(cred, print_level):
 # 打印线程组信息
 def show_thread_group(task, print_level):
     print(title(layer * print_level + "Thread Group:"))
-    print_level += 1
+    #print_level += 1
     print_data = layer * print_level + ""
     for tmp_thread in thread_group_lists(task):
         pid = int(tmp_thread.dereference()['pid'])
@@ -667,7 +670,7 @@ def show_children(task, print_level):
 # 打印namespace信息
 def show_namespace(nsproxy, print_level):
     print(title(layer * print_level + "Namespace Info: ") + print_ptr_data(nsproxy, nsproxy.type))
-    print_level += 1
+    #print_level += 1
     ns_list = [['UTS','uts_ns'], ['IPC','ipc_ns'], ['mount','mnt_ns'], ['PID','pid_ns_for_children'], ['NET','net_ns'], ['cgroup','cgroup_ns']]
 
     for nsitem in ns_list:
